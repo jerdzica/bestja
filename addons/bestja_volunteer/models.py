@@ -65,6 +65,7 @@ class Volunteer(models.Model):
     birthdate = fields.Date()
 
     daypart = fields.Many2many('volunteer.daypart', string="pora dnia")
+    daypart_comments = fields.Text(string="Uwagi")
 
     @api.model
     def set_default_language(self, lang_code):
