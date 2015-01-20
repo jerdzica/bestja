@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="bestja_detailed_report">
+            <field name="name">bestja_detailed.report</field>
+            <field name="model">bestja.detailed_report</field>
+            <field name="priority" eval="0"/>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="id" invisible="1"/>
+                    <div attrs="{'invisible': [('id', '=', False)]}">
+                        <button name="set_sent" string="Wyślij raport" states="draft" type="object" class="oe_highlight" groups="bestja_organization.coordinators"/>
+                        <button name="set_accepted" string="Zaakceptuj" states="sent" type="object" groups="bestja_base.instance_admin"/>
+                    </div>
+                    <div>
+                    <separator string="Lista zebranych produktów" attrs="{'invisible': [('id', '=', False)]}" class="oe inline"/>
+                    <a href="/bestja_detailed_reports/static/grupy_towarowe.pdf">Pobierz opis grup towarowych</a> 
+                    </div>
+                    <div class="oe_edit_only oe_grey" attrs="{'invisible': [('id', '!=', False)]}">Wybierz projekt, do którego chcesz stworzyć raport szczegółowy.</div>
+                    <group attrs="{'invisible': [('id', '!=', False)]}">
+                        <field name="project" options="{'no_create': True}" attrs="{'readonly': [('id', '!=', False)]}"/>
+                    </group>
+                    <button string="Kontynuuj ▶" class="oe_edit_only" type="object" name="continue_action" attrs="{'invisible': [('id', '!=', False)]}"/>
+                    <div attrs="{'invisible': [('id', '=', False)]}">
+                        <div class="oe_title">
+                            <label for="state" class="oe_inline"/><field name="state" readonly="1" class="state oe_inline"/>
+                        </div>
+                        <br/><br/><br/>
+                        <div>
+                        Aby dodać grupy towarowe pojedynczo, naciśnij "dodaj grupę towarową" i wybierz ją z listy. Aby dodać wszystkie grupy, naciśnij "dodaj wszystkie grupy".<br/>
+                        Możesz zapisać raport, aby do niego wrócić. Po kliknięciu przycisku "Wyślij raport" nie ma możliwości zmiany wprowadzonych danych. Dlatego przed wysłaniem raportu należy 
+                        upewnić się, że wszystkie komórki zawierają prawidłowe dane.<br/>
+                        Klikając na przycisk "Pobierz opis grup towarowych" można dowiedzieć się jakie produkty należą do danej kategorii.
+                        </div>
+                        <field name="report_entries">
+                            <tree editable="true" >
+                                <field name="commodity_code" readonly="1"/>
+                                <field name="commodity"/>
+                                <field name="quantity"/>
+                            </tree>
+                        </field>
+                        <button string="dodaj wszystkie grupy" class="oe_link" type="object" name="add_all_commodity_groups" states="draft"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_bestja_detailed_reports">
+            <field name="name">Moje raporty szczegółowe</field>
+            <field name="res_model">bestja.detailed_report</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[
+            '|',
+                ('project.organization.coordinator', '=', uid),
+                ('project.manager', '=', uid),
+            ]</field>
+        </record>
+
+        <record model="ir.ui.view" id="bestja_detailed_reports_tree">
+            <field name="name">bestja.detailed_reports.tree</field>
+            <field name="model">bestja.detailed_report</field>
+            <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="dates"/>
+            </tree>
+            </field>
+       </record>
+    </data>
+</openerp>
