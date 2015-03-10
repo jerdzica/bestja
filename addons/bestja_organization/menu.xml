@@ -4,5 +4,11 @@
         <menuitem parent="menu_organizations" id="menu_add_organization" action="action_organization" sequence="1"/>
         <menuitem parent="menu_organizations" id="menu_accept_organization" action="action_accept_organization" groups="bestja_base.instance_admin" sequence="2"/>
         <menuitem parent="menu_organizations" id="menu_organization_all" action="action_organization_all" groups="bestja_base.instance_admin" sequence="3"/>
+        
+        <!-- for additional menu administration -->
+        <menuitem parent="bestja_base.menu_administration" id="menu_organizations2" name="Organizacje" sequence="1"/>
+        <menuitem parent="menu_organizations2" id="menu_add_organization" action="action_organization" sequence="1"/>
+        <menuitem parent="menu_organizations2" id="menu_accept_organization" action="action_accept_organization" groups="bestja_base.instance_admin" sequence="2"/>
+        <menuitem parent="menu_organizations2" id="menu_organization_all" action="action_organization_all" groups="bestja_base.instance_admin" sequence="3"/>
     </data>
 </openerp>
